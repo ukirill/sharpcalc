@@ -15,12 +15,13 @@ namespace Console
         {
             var test = new Calc();
 
-            double x, y;
-            double.TryParse(args[0], System.Globalization.NumberStyles.Any,
-                CultureInfo.InvariantCulture, out x);
-            double.TryParse(args[1], System.Globalization.NumberStyles.Any,
-                CultureInfo.InvariantCulture, out y);
-
+            //double x, y;
+            //double.TryParse(args[0], System.Globalization.NumberStyles.Any,
+            //    CultureInfo.InvariantCulture, out x);
+            //double.TryParse(args[1], System.Globalization.NumberStyles.Any,
+            //    CultureInfo.InvariantCulture, out y);
+            var x = args[0];
+            var y = args[1];
             var operation = args[2];
 
             double result = 0;
