@@ -48,12 +48,8 @@ namespace CalcLibrary
 
             // если нашли - разбираем и возвращаем результат
             double x, y;
-            double.TryParse(args[0].ToString(),
-                System.Globalization.NumberStyles.Any,
-                CultureInfo.InvariantCulture, out x);
-            double.TryParse(args[1].ToString(),
-                System.Globalization.NumberStyles.Any,
-                CultureInfo.InvariantCulture, out y);
+            double.TryParse(args[0].ToString(), out x);
+            double.TryParse(args[1].ToString(), out y);
 
             var result = oper.Calc(x, y);
 

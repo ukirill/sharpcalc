@@ -15,17 +15,22 @@ namespace Console
         {
             var test = new Calc();
 
-            //double x, y;
-            //double.TryParse(args[0], System.Globalization.NumberStyles.Any,
-            //    CultureInfo.InvariantCulture, out x);
-            //double.TryParse(args[1], System.Globalization.NumberStyles.Any,
-            //    CultureInfo.InvariantCulture, out y);
-            var x = args[0];
-            var y = args[1];
-            var operation = args[2];
-
+            string x, y, operation;
             double result = 0;
-            result = (double)test.Execute(args[2], new object[] { x, y }) ;
+
+            try
+            {
+                x = args[0];
+                y = args[1];
+                operation = args[2];
+                result = (double)test.Execute(args[2], new object[] { x, y });
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                System.Console.WriteLine("Возможно, неверные параметры");
+                return;
+            }
             System.Console.WriteLine($"{x} {operation} {y} = {result}");
         }
     }
