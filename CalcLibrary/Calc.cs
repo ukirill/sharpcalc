@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,20 +14,33 @@ namespace CalcLibrary
         /// <summary>
         /// Список доступных операций
         /// </summary>
-        private IList<IOperation> operations { get; set; }
+        public IList<IOperation> Operations { get; private set; }
 
         public Calc()
         {
-            operations = new List<IOperation>();
+            Operations = new List<IOperation>();
+
             var assm = Assembly.GetAssembly(typeof(IOperation));
-            var types = assm.GetTypes();
+            var types = assm.GetTypes().ToList();
+            var ioper = typeof(IOperation);
+            // найти библиотеку
+            var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll");
+            foreach(var dll in dlls)
+            {
+                assm = Assembly.LoadFrom(dll);
+                types.AddRange(assm.GetTypes());
+            }
+
+            // загрузить как сборку
+            // добавить типы
             foreach (var t in types)
             {
+                if (t.IsInterface) continue;
                 var interfaces = t.GetInterfaces();
-                if (interfaces.Contains(typeof(IOperation)))
+                if (interfaces.Contains(ioper))
                 {
                     var oper = Activator.CreateInstance(t) as IOperation;
-                    if (oper != null) operations.Add(oper);
+                    if (oper != null) Operations.Add(oper);
                 }
             }
         }
@@ -41,7 +55,7 @@ namespace CalcLibrary
         public object Execute(string operation, object[] args)
         {
             // находим операцию в списке доступных
-            var oper = operations.FirstOrDefault(it => it.Name == operation);
+            var oper = Operations.FirstOrDefault(it => it.Name == operation);
 
             // если не нашли - возвр ошибку
             if (oper == null) throw new ArgumentException();
@@ -51,7 +65,17 @@ namespace CalcLibrary
             double.TryParse(args[0].ToString(), out x);
             double.TryParse(args[1].ToString(), out y);
 
-            var result = oper.Calc(x, y);
+            double result = 0;
+
+            var operArgs = oper as IOperationArgs;
+            if (operArgs != null)
+            {
+                result = operArgs.Calc(args.OfType<double>());
+            }
+            else
+            {
+                result = oper.Calc(x, y);
+            }
 
             return result;
         }

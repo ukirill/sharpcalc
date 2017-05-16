@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcTest", "CalcTest\CalcTest.csproj", "{41AA7FF7-B40D-489E-A3A2-7B07CBB8C10C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcGUI", "CalcGUI\CalcGUI.csproj", "{75BB8ED5-7B1F-4041-88B7-1D3B77759551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelOperation", "ExcelOperation\ExcelOperation.csproj", "{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{41AA7FF7-B40D-489E-A3A2-7B07CBB8C10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41AA7FF7-B40D-489E-A3A2-7B07CBB8C10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41AA7FF7-B40D-489E-A3A2-7B07CBB8C10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75BB8ED5-7B1F-4041-88B7-1D3B77759551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75BB8ED5-7B1F-4041-88B7-1D3B77759551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75BB8ED5-7B1F-4041-88B7-1D3B77759551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75BB8ED5-7B1F-4041-88B7-1D3B77759551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
