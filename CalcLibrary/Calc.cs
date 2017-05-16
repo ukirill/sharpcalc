@@ -20,14 +20,13 @@ namespace CalcLibrary
         {
             Operations = new List<IOperation>();
 
-            var assm = Assembly.GetAssembly(typeof(IOperation));
-            var types = assm.GetTypes().ToList();
+            var types = new List<Type>();
             var ioper = typeof(IOperation);
             // найти библиотеку
             var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll");
             foreach(var dll in dlls)
             {
-                assm = Assembly.LoadFrom(dll);
+                var assm = Assembly.LoadFrom(dll);
                 types.AddRange(assm.GetTypes());
             }
 
