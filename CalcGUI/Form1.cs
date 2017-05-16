@@ -23,6 +23,7 @@ namespace CalcGUI
 
             cbOper.DataSource = calc.Operations;
             cbOper.DisplayMember = "Name";
+            var it = cbOper.Items;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -55,25 +56,31 @@ namespace CalcGUI
 
             try
             {
-                result = calc.Execute(oper, args.ToArray());
-
+                result = calc.Execute(cbOper.SelectedItem as IOperation, args.ToArray());
             }
             catch (Exception ex)
             {
                 lResult.Text = $"Error: {ex.Message}";
+                return;
             }
 
             lResult.Text = $"{result}";
-
-
         }
 
         private void cbOper_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             var moreArgs = cbOper.SelectedItem is IOperationArgs;
             panTwoArgs.Visible = !moreArgs;
             panMoreArgs.Visible = moreArgs;
+        }
+
+        private void cbOper_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            var item = (cbOper.Items[e.Index] as IOperation);
+            Brush brush = item is IOperationArgs ? Brushes.Black : Brushes.Red;
+            e.Graphics.DrawString(item.Name, e.Font, brush, e.Bounds);
+            e.DrawFocusRectangle();
         }
     }
 }

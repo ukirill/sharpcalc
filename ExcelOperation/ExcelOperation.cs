@@ -14,7 +14,7 @@ namespace ExcelOperation
 
         public double Calc(double x, double y)
         {
-            return x * x + y * y + x - y;
+            return x * x + y * y;
         }
     }
 }

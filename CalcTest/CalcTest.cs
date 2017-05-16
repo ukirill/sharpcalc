@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CalcLibrary;
 
 namespace CalcTest
 {
@@ -31,9 +32,9 @@ namespace CalcTest
         [TestMethod]
         public void TestDivide()
         {
-            
+
             var test = new CalcLibrary.Calc();
-            
+
             var result = test.Divide(1, 2);
             var result1 = test.Divide(5, 2);
             var result2 = test.Divide(1, 0);
@@ -96,5 +97,6 @@ namespace CalcTest
             Assert.AreEqual(result1, 9d);
             Assert.AreEqual(result2, 1d);
         }
+
     }
 }

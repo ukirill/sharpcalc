@@ -24,7 +24,7 @@ namespace CalcLibrary
             var ioper = typeof(IOperation);
             // найти библиотеку
             var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll");
-            foreach(var dll in dlls)
+            foreach (var dll in dlls)
             {
                 var assm = Assembly.LoadFrom(dll);
                 types.AddRange(assm.GetTypes());
@@ -32,6 +32,7 @@ namespace CalcLibrary
 
             // загрузить как сборку
             // добавить типы
+
             foreach (var t in types)
             {
                 if (t.IsInterface) continue;
@@ -42,6 +43,10 @@ namespace CalcLibrary
                     if (oper != null) Operations.Add(oper);
                 }
             }
+            Operations = Operations
+                .GroupBy(o => o.Name + o.GetType().FullName)
+                .Select(group => group.FirstOrDefault())
+                .ToList();
         }
 
 
@@ -51,29 +56,42 @@ namespace CalcLibrary
         /// <param name="operation">Название операции</param>
         /// <param name="args">Аргументы операции</param>
         /// <returns>Результат операции</returns>
+        [Obsolete]
         public object Execute(string operation, object[] args)
         {
             // находим операцию в списке доступных
             var oper = Operations.FirstOrDefault(it => it.Name == operation);
 
             // если не нашли - возвр ошибку
-            if (oper == null) throw new ArgumentException();
+            if (oper == null) return "Error: no such operation defined";
+            //double result = 0;
+            // если нашли - вызывем новый Execute и возвращаем результат
+            var result = Execute(oper, args);
 
-            // если нашли - разбираем и возвращаем результат
+            return result;
+        }
+
+        /// <summary>
+        /// Новый метод Execute, принимает на вход операцию, а не ее имя
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public object Execute(IOperation operation, object[] args)
+        {
             double x, y;
             double.TryParse(args[0].ToString(), out x);
             double.TryParse(args[1].ToString(), out y);
-
             double result = 0;
 
-            var operArgs = oper as IOperationArgs;
+            var operArgs = operation as IOperationArgs;
             if (operArgs != null)
             {
-                result = operArgs.Calc(args.OfType<double>());
+                result = operArgs.Calc(args);
             }
             else
             {
-                result = oper.Calc(x, y);
+                result = operation.Calc(x, y);
             }
 
             return result;

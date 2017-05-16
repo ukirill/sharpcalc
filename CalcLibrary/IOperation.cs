@@ -15,6 +15,6 @@ namespace CalcLibrary
 
     public interface IOperationArgs : IOperation
     {
-        double Calc(IEnumerable<double> args);
+        double Calc(IEnumerable<object> args);
     }
 }

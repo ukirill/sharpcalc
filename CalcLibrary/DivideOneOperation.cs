@@ -8,11 +8,11 @@ namespace CalcLibrary
 {
     class DivideOneOperation : IOperation
     {
-        public string Name { get { return "divideone"; } }
+        public string Name { get { return "divide"; } }
 
         public double Calc(double x, double y)
         {
-            return x*x*x;
+            return x / 2;
         }
     }
 }

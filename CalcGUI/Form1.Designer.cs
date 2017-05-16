@@ -75,11 +75,13 @@
             // 
             // cbOper
             // 
+            this.cbOper.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbOper.FormattingEnabled = true;
             this.cbOper.Location = new System.Drawing.Point(19, 12);
             this.cbOper.Name = "cbOper";
             this.cbOper.Size = new System.Drawing.Size(135, 21);
             this.cbOper.TabIndex = 5;
+            this.cbOper.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbOper_DrawItem);
             this.cbOper.SelectedIndexChanged += new System.EventHandler(this.cbOper_SelectedIndexChanged);
             // 
             // panTwoArgs

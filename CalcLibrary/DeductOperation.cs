@@ -19,9 +19,10 @@ namespace CalcLibrary
             return x - y;
         }
 
-        public double Calc(IEnumerable<double> args)
+        public double Calc(IEnumerable<object> args)
         {
-            return 0;
+            return args.Select(o => double.Parse(o.ToString()))
+                .Aggregate((res, next) => res - next);
         }
     }
 }
