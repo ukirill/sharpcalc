@@ -16,14 +16,22 @@ namespace CalcLibrary
         /// </summary>
         public IList<IOperation> Operations { get; private set; }
 
-        public Calc()
+        private string ExtendDllDirectory { get; set; }
+
+        public Calc() : this("")
+        { }
+
+        public Calc(string extendDllDirectory)
         {
             Operations = new List<IOperation>();
 
             var types = new List<Type>();
             var ioper = typeof(IOperation);
             // найти библиотеку
-            var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll");
+            var path = string.IsNullOrEmpty(extendDllDirectory)
+                ? Directory.GetCurrentDirectory()
+                : extendDllDirectory;
+            var dlls = Directory.GetFiles(path, "*.dll");
             foreach (var dll in dlls)
             {
                 var assm = Assembly.LoadFrom(dll);

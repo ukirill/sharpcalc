@@ -13,6 +13,22 @@ namespace CalcGUI
 {
     public partial class Form1 : Form
     {
+
+        private class OperationBeauty
+        {
+            public IOperation Operation{ get; set; }
+            public string Name { get; set;  }
+
+            public OperationBeauty(IOperation operation)
+            {
+                Operation = operation;
+
+                var type = Operation.GetType();
+
+                Name = $"{type.Name}.{type.Namespace}";
+            }
+        }
+        
         private CalcLibrary.Calc calc { get; set; }
         public Form1()
         {
@@ -21,7 +37,8 @@ namespace CalcGUI
 
             //cbOper.Items.AddRange(calc.Operations.Select(o => o.Name).ToArray());
 
-            cbOper.DataSource = calc.Operations;
+            cbOper.DataSource = calc.Operations
+                .Select(o => new OperationBeauty(o)).ToList();
             cbOper.DisplayMember = "Name";
             var it = cbOper.Items;
         }
@@ -38,8 +55,10 @@ namespace CalcGUI
 
             var oper = cbOper.Text;
             object result = null;
+            //var operB //!!! ДОБАВИТЬ Бьютифаер
             var moreArgs = cbOper.SelectedItem is IOperationArgs;
             var args = new List<object>();
+
 
             if (moreArgs)
             {

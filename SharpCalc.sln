@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcGUI", "CalcGUI\CalcGUI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelOperation", "ExcelOperation\ExcelOperation.csproj", "{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCalc", "WebCalc\WebCalc.csproj", "{35B4EED9-A778-4A7E-BCE3-AB47FAA881B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEBB9C4E-6040-455B-BC5A-7E8573B4335F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35B4EED9-A778-4A7E-BCE3-AB47FAA881B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35B4EED9-A778-4A7E-BCE3-AB47FAA881B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35B4EED9-A778-4A7E-BCE3-AB47FAA881B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35B4EED9-A778-4A7E-BCE3-AB47FAA881B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

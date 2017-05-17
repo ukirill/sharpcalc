@@ -1,0 +1,5 @@
+﻿@model CalcLibrary.IOperation
+
+@*<input type="text" name="Operation.Name" value="@(Model.Name)" />
+*@
+@Html.DropDownListFor(m => m.Name, new SelectList(Model.Name))
