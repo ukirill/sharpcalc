@@ -34,11 +34,7 @@ namespace CalcGUI
         {
             InitializeComponent();
             calc = new CalcLibrary.Calc();
-
-            //cbOper.Items.AddRange(calc.Operations.Select(o => o.Name).ToArray());
-
-            cbOper.DataSource = calc.Operations
-                .Select(o => new OperationBeauty(o)).ToList();
+            cbOper.DataSource = calc.Operations;
             cbOper.DisplayMember = "Name";
             var it = cbOper.Items;
         }

@@ -69,11 +69,7 @@ namespace CalcLibrary
         {
             // находим операцию в списке доступных
             var oper = Operations.FirstOrDefault(it => it.Name == operation);
-
-            // если не нашли - возвр ошибку
-            if (oper == null) return "Error: no such operation defined";
-            //double result = 0;
-            // если нашли - вызывем новый Execute и возвращаем результат
+            // вызывем новый Execute и возвращаем результат
             var result = Execute(oper, args);
 
             return result;
@@ -87,6 +83,8 @@ namespace CalcLibrary
         /// <returns></returns>
         public object Execute(IOperation operation, object[] args)
         {
+            if (operation == null)
+                return "Error: no such operation defined";
             double x, y;
             double.TryParse(args[0].ToString(), out x);
             double.TryParse(args[1].ToString(), out y);

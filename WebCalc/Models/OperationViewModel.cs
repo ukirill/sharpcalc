@@ -10,6 +10,8 @@ namespace WebCalc.Models
     {
         public string Operation { get; set; }
 
+        public Dictionary<string, string> Operations { get; set; }
+
         public string InputData { get; set; }
 
         public string Result { get; set; }

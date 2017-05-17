@@ -19,7 +19,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Operation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Operation, new { htmlAttributes = new { @class = "form-control" } })
+               @*@Html.EditorFor(model => model.Operation, new { htmlAttributes = new { @class = "form-control" } })*@ 
+               @Html.DropDownListFor(model => model.Operation, new SelectList(Model.Operations, "Key", "Value"), new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
@@ -40,7 +41,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Calc" class="btn btn-default" />
             </div>
         </div>
     </div>
