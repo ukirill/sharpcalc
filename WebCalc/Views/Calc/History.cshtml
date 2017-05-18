@@ -1,0 +1,47 @@
+﻿@model WebCalc.Models.HistoryViewModel
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>История операций</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Номер</th>
+        <th>Операция</th>
+        <th>Операнды</th>
+        <th>Результат</th>
+        <th>Время выполнения, мс</th>
+        <th>Дата выполнения</th>
+    </tr>
+
+    @foreach (var item in Model.OperationHistory)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(i => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.OperationName)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.Arguments)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.Result)
+            </td>   
+            <td>
+                @Html.DisplayFor(i => item.ExecutionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.ExecutionDate)
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    @Html.ActionLink("Калькулятор", "Index")
+</div>
