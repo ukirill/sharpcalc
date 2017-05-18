@@ -102,7 +102,7 @@ namespace WebCalc.Controllers
         public ActionResult History()
         {
             var model = new HistoryViewModel();
-            model.OperationHistory = OperationResultRepository.GetAll();
+            model.OperationHistory = OperationResultRepository.GetAll("Id");
             return View(model);
         }
 
