@@ -7,20 +7,29 @@ using WebCalc.Models;
 using CalcLibrary;
 using WebCalc.Managers;
 using System.Diagnostics;
+using DBModel.Managers;
+using DBModel.Interfaces;
+using DBModel.Models;
 
 namespace WebCalc.Controllers
 {
-    
+    [Authorize]
     public class CalcController : Controller
     {
         #region private
         private IOperationResultRepository OperationResultRepository { get; set; }
+
+        private IUserRepository UserRepository { get; set; }
 
         private Calc Calc { get; set; }
 
         private Dictionary<string, string> Operations { get; set; }
 
         //private IEnumerable<SelectListItem> OperationList { get; set; }
+        private User GetCurrentUser()
+        {
+            return UserRepository.GetAll().FirstOrDefault(u => u.Email == HttpContext.User.Identity.Name);
+        }
         #endregion
 
 
@@ -33,7 +42,8 @@ namespace WebCalc.Controllers
                 .Where(o => o is IOperationArgs)
                 .ToDictionary(o => o.GetType().FullName,
                               o => $"{o.GetType().Name}.{o.Name}");
-            OperationResultRepository = new OperationManager();
+            OperationResultRepository = new EFOperResultRepository();
+            UserRepository = new EFUserRepository();
         }
 
 
@@ -85,7 +95,8 @@ namespace WebCalc.Controllers
                     Result = !nanOrInfinity ? result as double? : null,
                     Arguments = model.InputData,
                     ExecutionTime = stopwatch.ElapsedMilliseconds,
-                    ExecutionDate = DateTime.Now
+                    ExecutionDate = DateTime.Now,
+                    User = GetCurrentUser() 
                 };
                 //запись в базу
                 if (forcedCalc && oldResult != null)

@@ -1,20 +1,23 @@
-﻿using System;
+﻿using DBModel.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace WebCalc.Managers
+namespace DBModel.Models
 {
     /// <summary>
     /// Результат выполнения операции
     /// </summary>
 
+    [Table("OperationResult")]
     public class OperationResult
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string OperationName { get; set; }
-
+   
         public string Arguments { get; set; }
 
         public double? Result { get; set; }
@@ -24,5 +27,7 @@ namespace WebCalc.Managers
         public long ExecutionTime { get; set; }
 
         public DateTime ExecutionDate { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

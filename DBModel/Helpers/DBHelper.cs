@@ -13,7 +13,7 @@ namespace WebCalc.Helpers
     public class DBHelper
     {
 
-        public const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\sharpcalc\WebCalc\App_Data\CalcStorage.mdf;Integrated Security=True";
+        public const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\sharpcalc\DBModel\App_Data\CalcStorage.mdf;Integrated Security=True";
 
         public static IEnumerable<object> GetAllFromTable(string table, string sortBy = "")
         {
