@@ -32,7 +32,7 @@ namespace WebCalc.Managers
         {
         }
 
-        public virtual IEnumerable<T> GetAll(string sortBy = "")
+        public virtual IEnumerable<T> GetAll()
         {
             return null;
         }

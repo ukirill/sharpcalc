@@ -20,7 +20,7 @@ namespace DBModel.Managers
             Users = _db.Set<User>();
         }
 
-        public override IEnumerable<User> GetAll(string sortBy = "")
+        public override IEnumerable<User> GetAll()
         {
             var result = new List<User>();
             return Users.ToList();

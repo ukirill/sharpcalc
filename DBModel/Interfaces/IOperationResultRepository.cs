@@ -9,6 +9,6 @@ namespace WebCalc.Managers
 {
     public interface IOperationResultRepository : IBaseRepository<OperationResult>
     {
-
+        IQueryable<OperationResult> GetAll(string filter);
     }
 }

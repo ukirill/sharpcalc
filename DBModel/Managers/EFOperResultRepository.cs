@@ -19,17 +19,22 @@ namespace DBModel.Managers
             OperationResults = context.Set<OperationResult>();
         }
 
-        public override IEnumerable<OperationResult> GetAll(string sortBy = "")
+        public override IEnumerable<OperationResult> GetAll()
         {
             var result = new List<OperationResult>();
             return OperationResults.Include(o => o.User).ToList();
 
         }
 
-        public  IEnumerable<OperationResult> GetAll(bool flag)
+        public override IEnumerable<OperationResult> GetAll(bool flag)
         {
             if (flag) return OperationResults.Include(it => it.User).ToList();
             else return GetAll();    
+        }
+
+        public IQueryable<OperationResult> GetAll(string filter)
+        {
+            return OperationResults.Where(x => x.OperationName == filter).Include(x => x.User);
         }
 
         public override OperationResult Load(long id)

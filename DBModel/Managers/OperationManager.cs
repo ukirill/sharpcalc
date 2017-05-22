@@ -10,12 +10,12 @@ namespace WebCalc.Managers
 {
     public class OperationManager : IOperationResultRepository
     {
-        public IEnumerable<OperationResult> GetAll(string sortBy = "")
+        public IEnumerable<OperationResult> GetAll()
         {
             //Connect to base
             var items = new List<OperationResult>();
 
-            var records = DBHelper.GetAllFromTable("OperationResult", sortBy);
+            var records = DBHelper.GetAllFromTable("OperationResult");
 
             foreach (IDictionary<int, object> record in records)
             {
@@ -79,5 +79,8 @@ namespace WebCalc.Managers
 
             DBHelper.UpdateTable("OperationResult", fields, entity.Id);
         }
+
+        public IQueryable<OperationResult> GetAll(string filter)
+        { return null; }
     }
 }

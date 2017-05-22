@@ -12,6 +12,7 @@ using DBModel.Interfaces;
 using DBModel.Models;
 using System.Data.Entity;
 using DBModel.Helpers;
+using static WebCalc.Models.HistoryViewModel;
 
 namespace WebCalc.Controllers
 {
@@ -27,11 +28,15 @@ namespace WebCalc.Controllers
 
         private Dictionary<string, string> Operations { get; set; }
 
+        private CalcContext db { get; set; }
+
         //private IEnumerable<SelectListItem> OperationList { get; set; }
         private User GetCurrentUser()
         {
             return UserRepository.GetAll().FirstOrDefault(u => u.Email == HttpContext.User.Identity.Name);
         }
+
+
         #endregion
 
 
@@ -44,9 +49,9 @@ namespace WebCalc.Controllers
                 .Where(o => o is IOperationArgs)
                 .ToDictionary(o => o.GetType().FullName,
                               o => $"{o.GetType().Name}.{o.Name}");
-            var context = new CalcContext();
-            OperationResultRepository = new EFOperResultRepository(context);
-            UserRepository = new EFUserRepository(context);
+            db = new CalcContext();
+            OperationResultRepository = new EFOperResultRepository(db);
+            UserRepository = new EFUserRepository(db);
         }
 
 
@@ -113,10 +118,24 @@ namespace WebCalc.Controllers
         }
 
         [HttpGet]
-        public ActionResult History()
+        public ActionResult History(string filter)
         {
             var model = new HistoryViewModel();
-            model.OperationHistory = OperationResultRepository.GetAll("Id");
+            if (filter == null || filter == "")
+            {
+                model.OperationHistory = OperationResultRepository.GetAll();
+                model.Top3 = db.Database.SqlQuery<Top3OperationsElement>
+                        (
+                            @"Select Top 3 OperationName, Count(*) as OperationCount 
+                            From OperationResult 
+                            Group By OperationName 
+                            Order By OperationCount DESC"
+                        ) as IEnumerable<Top3OperationsElement>;
+            }
+            else
+            {
+                model.OperationHistory = OperationResultRepository.GetAll(filter); 
+            }
             return View(model);
         }
 
