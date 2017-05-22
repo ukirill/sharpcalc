@@ -2,6 +2,7 @@
 using DBModel.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,32 +10,40 @@ using WebCalc.Managers;
 
 namespace DBModel.Managers
 {
-    public class EFOperResultRepository : IOperationResultRepository
+    public class EFOperResultRepository : BaseRepository<OperationResult>, IOperationResultRepository
     {
-        public IEnumerable<OperationResult> GetAll(string sortBy = "")
+        public DbSet<OperationResult> OperationResults{ get; set; }
+
+        public EFOperResultRepository(DbContext context) : base(context)
         {
-            var result = new List<OperationResult>();
-            using (var context = new CalcContext())
-            {
-                return context.OperationResults.ToList();
-            }
+            OperationResults = context.Set<OperationResult>();
         }
 
-        public OperationResult Load(long id)
+        public override IEnumerable<OperationResult> GetAll(string sortBy = "")
+        {
+            var result = new List<OperationResult>();
+            return OperationResults.Include(o => o.User).ToList();
+
+        }
+
+        public  IEnumerable<OperationResult> GetAll(bool flag)
+        {
+            if (flag) return OperationResults.Include(it => it.User).ToList();
+            else return GetAll();    
+        }
+
+        public override OperationResult Load(long id)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(OperationResult entity)
+        public override void Save(OperationResult entity)
         {
-            using (var context = new CalcContext())
-            {
-                context.OperationResults.Add(entity);
-                context.SaveChanges();
-            }
+                OperationResults.Add(entity);
+                _db.SaveChanges();
         }
 
-        public void Update(OperationResult entity)
+        public override void Update(OperationResult entity)
         {
             throw new NotImplementedException();
         }

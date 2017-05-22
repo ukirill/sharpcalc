@@ -28,6 +28,6 @@ namespace DBModel.Models
 
         public DateTime ExecutionDate { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

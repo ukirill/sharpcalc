@@ -6,35 +6,39 @@ using System.Text;
 using System.Threading.Tasks;
 using DBModel.Models;
 using DBModel.Helpers;
+using WebCalc.Managers;
+using System.Data.Entity;
 
 namespace DBModel.Managers
 {
-    public class EFUserRepository : IUserRepository
+    public class EFUserRepository : BaseRepository<User>, IUserRepository
     {
-        public IEnumerable<User> GetAll(string sortBy = "")
+        private DbSet<User> Users { get; set; }
+
+        public EFUserRepository(DbContext context) : base(context)
         {
-            var result = new List<User>();
-            using (var context = new CalcContext())
-            {
-                return context.Users.ToList();
-            }
+            Users = _db.Set<User>();
         }
 
-        public User Load(long id)
+        public override IEnumerable<User> GetAll(string sortBy = "")
+        {
+            var result = new List<User>();
+            return Users.ToList();
+        
+        }
+
+        public override User Load(long id)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(User entity)
+        public override void Save(User entity)
         {
-            using (var context = new CalcContext())
-            {
-                context.Users.Add(entity);
-                context.SaveChanges();
-            }
+                Users.Add(entity);
+                _db.SaveChanges();
         }
 
-        public void Update(User entity)
+        public override void Update(User entity)
         {
             throw new NotImplementedException();
         }
@@ -43,10 +47,9 @@ namespace DBModel.Managers
         {
             if (string.IsNullOrWhiteSpace(login)) return false;
             if (string.IsNullOrWhiteSpace(password)) return false;
-            using (var context = new CalcContext())
-            {
-                return context.Users.FirstOrDefault(u => u.Login == login && u.Password == password) != null;
-            }
+
+            return Users.FirstOrDefault(u => u.Login == login && u.Password == password) != null;
+
         }
     }
 }

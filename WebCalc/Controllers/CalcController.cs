@@ -10,6 +10,8 @@ using System.Diagnostics;
 using DBModel.Managers;
 using DBModel.Interfaces;
 using DBModel.Models;
+using System.Data.Entity;
+using DBModel.Helpers;
 
 namespace WebCalc.Controllers
 {
@@ -42,8 +44,9 @@ namespace WebCalc.Controllers
                 .Where(o => o is IOperationArgs)
                 .ToDictionary(o => o.GetType().FullName,
                               o => $"{o.GetType().Name}.{o.Name}");
-            OperationResultRepository = new EFOperResultRepository();
-            UserRepository = new EFUserRepository();
+            var context = new CalcContext();
+            OperationResultRepository = new EFOperResultRepository(context);
+            UserRepository = new EFUserRepository(context);
         }
 
 

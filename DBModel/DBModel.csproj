@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Helpers\CalcContext.cs" />
     <Compile Include="Helpers\DBHelper.cs" />
+    <Compile Include="Interfaces\BaseRepository.cs" />
     <Compile Include="Interfaces\IBaseRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IOperationResultRepository.cs" />

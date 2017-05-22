@@ -13,6 +13,7 @@ using DBModel.Interfaces;
 using DBModel.Managers;
 using System.Web.Security;
 using DBModel.Models;
+using DBModel.Helpers;
 
 namespace WebCalc.Controllers
 {
@@ -21,9 +22,11 @@ namespace WebCalc.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserRepository UserRepository;
 
         public AccountController()
         {
+            UserRepository = new EFUserRepository(new CalcContext());
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -79,8 +82,8 @@ namespace WebCalc.Controllers
 
             // Сбои при входе не приводят к блокированию учетной записи
             // Чтобы ошибки при вводе пароля инициировали блокирование учетной записи, замените на shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            var ur = new EFUserRepository();
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var ur = UserRepository;
 
             if (ur.Validate(model.Email, model.Password))
             {
@@ -155,7 +158,7 @@ namespace WebCalc.Controllers
         {
 
           
-            var ur = new EFUserRepository();
+            var ur = UserRepository;
             if (ur.GetAll().Any(u => u.Email == model.Email))
             {
                 ModelState.AddModelError("", "Есть такой!");

@@ -18,5 +18,7 @@ namespace WebCalc.Managers
         void Update(T entity);
 
         IEnumerable<T> GetAll(string sortBy = "");
+
+        IEnumerable<T> GetAll(bool flag);
     }
 }

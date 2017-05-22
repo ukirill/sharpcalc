@@ -41,6 +41,11 @@ namespace WebCalc.Managers
             return items;
         }
 
+        public IEnumerable<OperationResult> GetAll(bool flag)
+        {
+            return null;
+        }
+
         public OperationResult Load(long id)
         {
             throw new NotImplementedException();
