@@ -71,3 +71,7 @@ namespace DBModel.Helpers
 
 10. База обновилась, можем писать результаты вычислений с пользователем
 
+22.05
+
+- Добавлен вывод и фильтрация истории по трем наиболее используемым операциям
+- Реализован перегруженный метод ``IOperationResultRepository IQueryable<OperationResult> GetAll(string filter)``
