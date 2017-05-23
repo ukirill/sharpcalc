@@ -148,6 +148,7 @@ namespace WebCalc.Controllers
         [HttpPost]
         public ActionResult History(HistoryViewModel model, string delete)
         {
+            model.OperationHistory = OperationResultRepository.GetAll();
             return View(model);
         }
 
