@@ -63,7 +63,7 @@ namespace DBModel.Helpers
 
 6. Вводим команду задающую автомиграцию __Enable-Migrations –EnableAutomaticMigrations__
 
-7. Вводим команду задающую начальное состояние __Add-Migration InitialMigrations -IgnoreChanges__
+7. Вводим команду задающую начальное состояние __Add-Migration InitialMigrations -IgnoreChanges__ (возможно, без _IgnoreChanges_)
 
 8. Если все ок, меняем структуру объектов ``Users.cs`` и ``OperationResult.cs``, добавляя ``virtual`` поля для связи
 
@@ -75,3 +75,10 @@ namespace DBModel.Helpers
 
 - Добавлен вывод и фильтрация истории по трем наиболее используемым операциям
 - Реализован перегруженный метод ``IOperationResultRepository IQueryable<OperationResult> GetAll(string filter)``
+
+23.05
+
+- Реализованы Мои операции
+- Реализованы методы ``Delete`` и ``Update`` для ``NHOperResultRepository``
+
+

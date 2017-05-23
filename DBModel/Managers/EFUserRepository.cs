@@ -51,5 +51,15 @@ namespace DBModel.Managers
             return Users.FirstOrDefault(u => u.Login == login && u.Password == password) != null;
 
         }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(User entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

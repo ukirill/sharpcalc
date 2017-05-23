@@ -53,6 +53,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.4.1.1.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -66,11 +74,14 @@
   <ItemGroup>
     <Compile Include="Helpers\CalcContext.cs" />
     <Compile Include="Helpers\DBHelper.cs" />
+    <Compile Include="Helpers\NHibernateHelper.cs" />
     <Compile Include="Interfaces\BaseRepository.cs" />
     <Compile Include="Interfaces\IBaseRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IOperationResultRepository.cs" />
     <Compile Include="Managers\EFOperResultRepository.cs" />
+    <Compile Include="Managers\NHOperResultRepository.cs" />
+    <Compile Include="Managers\NHUserRepository.cs" />
     <Compile Include="Managers\OperationManager.cs" />
     <Compile Include="Managers\EFUserRepository.cs" />
     <Compile Include="Migrations\201705191038418_InitialMigrations.cs" />
@@ -87,6 +98,11 @@
     <Content Include="App_Data\CalcStorage_log.ldf">
       <DependentUpon>CalcStorage.mdf</DependentUpon>
     </Content>
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Mappings\User.hbm.xml" />
+    <EmbeddedResource Include="Mappings\OperationResult.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -109,6 +125,7 @@
       <DependentUpon>201705191038418_InitialMigrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

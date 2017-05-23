@@ -9,12 +9,12 @@ namespace DBModel.Models
 {
     public class User
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public virtual IList<OperationResult> OperationResult { get; set; }
+        public virtual long Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Email { get; set; }
+        public virtual DateTime BirthDate { get; set; }
+        public virtual string Login { get; set; }
+        public virtual string Password { get; set; }
+        public virtual ISet<OperationResult> Operations { get; set; }
     }
 }

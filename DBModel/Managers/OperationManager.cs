@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebCalc.Helpers;
+using DBModel.Managers;
 
 namespace WebCalc.Managers
 {
@@ -80,7 +81,27 @@ namespace WebCalc.Managers
             DBHelper.UpdateTable("OperationResult", fields, entity.Id);
         }
 
-        public IQueryable<OperationResult> GetAll(string filter)
+        public IEnumerable<OperationResult> GetAll(string filter)
         { return null; }
+
+        public IDictionary<string, int> GetTop(int limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<EFOperResultRepository.TopOperationsElement> IOperationResultRepository.GetTop(int limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(OperationResult entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

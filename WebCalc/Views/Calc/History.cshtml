@@ -1,62 +1,89 @@
 ﻿@model WebCalc.Models.HistoryViewModel
 
 @{
-    ViewBag.Title = "History";
+    ViewBag.Title = "История операций";
+    string currentSort = ViewBag.CurrentSort;
+    if (string.IsNullOrEmpty(currentSort))
+    {
+        currentSort = "date_desc";
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/scripts/validate.min.js")
 }
 
 <h2>История операций</h2>
 <p>
-    @if (Model.Top3 != null)
+    @if (Model.Top != null)
     {
-        foreach (var item in Model.Top3)
+        foreach (var item in Model.Top)
         {
-            @Html.ActionLink($"{item.OperationName} ({item.OperationCount}) ", "History", "Calc", new { filter = item.OperationName }, null);
+            @:&nbsp;
+            @Html.ActionLink($"{item.OperationName} ({item.OperationCount}) ", "History", "Calc", new { filter = item.OperationName }, new { @class = "btn btn-warning" });
         }
     }
     else
     {
-        @Html.ActionLink("Вся история операций", "History", "Calc")
+        @Html.ActionLink("Вся история операций", "History", "Calc", null, new { @class = "btn btn-primary" })
     }
+    @Html.ActionLink("История моих операций", "History", "Calc", new { myOperHistory = true }, new { @class = "btn btn-primary" })
 </p>
-<table class="table">
-    <tr>
-        <th>Номер</th>
-        <th>Операция</th>
-        <th>Операнды</th>
-        <th>Результат</th>
-        <th>Время выполнения, мс</th>
-        <th>Дата выполнения</th>
-        <th>Пользователь</th>
-    </tr>
-
-    @foreach (var item in Model.OperationHistory)
-    {
+<table id="historyTable" class="table table-striped table-bordered table-sortable sortable">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(i => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.OperationName)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.Arguments)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.Result)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.ExecutionTime)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.ExecutionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.User.Name)
-            </td>
+            <th>Id</th>
+            <th>Операция</th>
+            <th>Операнды</th>
+            <th>Результат</th>
+            <th>Время выполнения, мс</th>
+            <th>Дата выполнения</th>
+            <th>Пользователь</th>
+            <th>Действие</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @if (Model.OperationHistory != null)
+        {
+            foreach (var item in Model.OperationHistory)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(i => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.OperationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.Arguments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.Result)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.ExecutionTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.ExecutionDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.User.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Удалить", "History", new { deleteId = item.Id }, null)
+                    </td>
+                </tr>
 
+            }
+        }
+    </tbody>
 </table>
 <div>
-    @Html.ActionLink("Калькулятор", "Index")
+    @Html.ActionLink("Калькулятор", "Index", null, new { @class = "btn btn-primary" })
 </div>
+<script>
+    $(document).ready(function () {
+        $('#historyTable').DataTable();
+    });
+</script>
+

@@ -11,23 +11,22 @@ namespace DBModel.Models
     /// Результат выполнения операции
     /// </summary>
 
-    [Table("OperationResult")]
     public class OperationResult
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
-        public string OperationName { get; set; }
+        public virtual string OperationName { get; set; }
    
-        public string Arguments { get; set; }
+        public virtual string Arguments { get; set; }
 
-        public double? Result { get; set; }
+        public virtual double? Result { get; set; }
         /// <summary>
         /// Продолжительность выпоплнения
         /// </summary>
-        public long ExecutionTime { get; set; }
+        public virtual long ExecutionTime { get; set; }
 
-        public DateTime ExecutionDate { get; set; }
+        public virtual DateTime ExecutionDate { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

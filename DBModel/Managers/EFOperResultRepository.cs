@@ -14,6 +14,12 @@ namespace DBModel.Managers
     {
         public DbSet<OperationResult> OperationResults{ get; set; }
 
+        public class TopOperationsElement
+        {
+            public string OperationName { get; set; }
+            public int OperationCount { get; set; }
+        }
+
         public EFOperResultRepository(DbContext context) : base(context)
         {
             OperationResults = context.Set<OperationResult>();
@@ -32,7 +38,7 @@ namespace DBModel.Managers
             else return GetAll();    
         }
 
-        public IQueryable<OperationResult> GetAll(string filter)
+        public IEnumerable<OperationResult> GetAll(string filter)
         {
             return OperationResults.Where(x => x.OperationName == filter).Include(x => x.User);
         }
@@ -51,6 +57,20 @@ namespace DBModel.Managers
         public override void Update(OperationResult entity)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<TopOperationsElement> GetTop(int limit = 3)
+        {
+            var result = new Dictionary<string, int>();
+            var param = new System.Data.SqlClient.SqlParameter("@limit", limit);
+            var data = _db.Database.SqlQuery<TopOperationsElement>(
+                 $@"Select Top {limit} OperationName, Count(*) as OperationCount 
+                            From OperationResult 
+                            Group By OperationName 
+                            Order By OperationCount DESC"
+                ) as IEnumerable<TopOperationsElement>;
+            return data;
+             
         }
     }
 }

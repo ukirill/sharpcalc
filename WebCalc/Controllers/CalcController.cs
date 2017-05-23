@@ -50,8 +50,8 @@ namespace WebCalc.Controllers
                 .ToDictionary(o => o.GetType().FullName,
                               o => $"{o.GetType().Name}.{o.Name}");
             db = new CalcContext();
-            OperationResultRepository = new EFOperResultRepository(db);
-            UserRepository = new EFUserRepository(db);
+            OperationResultRepository = new NHOperResultRepository();
+            UserRepository = new NHUserRepository();
         }
 
 
@@ -73,7 +73,7 @@ namespace WebCalc.Controllers
             var operResults = OperationResultRepository.GetAll();
 
             var oldResult = operResults.FirstOrDefault(o =>
-                        o.OperationName == model.Operation && o.Arguments == model.InputData);
+                        o.OperationName.Trim() == model.Operation && o.Arguments == model.InputData);
 
             if (oldResult != null && !forcedCalc)
             {
@@ -95,7 +95,7 @@ namespace WebCalc.Controllers
                 stopwatch.Stop();
                 model.Result = result.ToString();
                 //!!!Опасное преобразовние
-                bool nanOrInfinity = (double.IsNaN((double)result) || double.IsInfinity((double)result)); 
+                bool nanOrInfinity = (double.IsNaN((double)result) || double.IsInfinity((double)result));
                 var operResult = new OperationResult()
                 {
                     Id = (oldResult != null) ? oldResult.Id : 0,
@@ -104,7 +104,7 @@ namespace WebCalc.Controllers
                     Arguments = model.InputData,
                     ExecutionTime = stopwatch.ElapsedMilliseconds,
                     ExecutionDate = DateTime.Now,
-                    User = GetCurrentUser() 
+                    User = GetCurrentUser()
                 };
                 //запись в базу
                 if (forcedCalc && oldResult != null)
@@ -118,26 +118,39 @@ namespace WebCalc.Controllers
         }
 
         [HttpGet]
-        public ActionResult History(string filter)
+        public ActionResult History(string filter, int deleteId = 0, bool myOperHistory = false)
         {
             var model = new HistoryViewModel();
+
+            if (deleteId != 0)
+            {
+                OperationResultRepository.Delete(deleteId);
+                deleteId = 0;
+            }
+            if (myOperHistory)
+            {
+                model.OperationHistory = GetCurrentUser().Operations;
+                return View(model);
+            }
             if (filter == null || filter == "")
             {
                 model.OperationHistory = OperationResultRepository.GetAll();
-                model.Top3 = db.Database.SqlQuery<Top3OperationsElement>
-                        (
-                            @"Select Top 3 OperationName, Count(*) as OperationCount 
-                            From OperationResult 
-                            Group By OperationName 
-                            Order By OperationCount DESC"
-                        ) as IEnumerable<Top3OperationsElement>;
+                model.Top = OperationResultRepository.GetTop(3);
             }
             else
             {
-                model.OperationHistory = OperationResultRepository.GetAll(filter); 
+                model.OperationHistory = OperationResultRepository.GetAll(filter);
             }
             return View(model);
         }
+
+        // POST: History
+        [HttpPost]
+        public ActionResult History(HistoryViewModel model, string delete)
+        {
+            return View(model);
+        }
+
 
     }
 }

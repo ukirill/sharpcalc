@@ -41,5 +41,15 @@ namespace WebCalc.Managers
         {
             return null;
         }
+
+        public void Delete(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

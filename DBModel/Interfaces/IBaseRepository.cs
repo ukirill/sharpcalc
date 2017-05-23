@@ -20,5 +20,9 @@ namespace WebCalc.Managers
         IEnumerable<T> GetAll();
 
         IEnumerable<T> GetAll(bool flag);
+
+        void Delete(T entity);
+
+        void Delete(int id);
     }
 }
